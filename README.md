@@ -32,7 +32,7 @@ The easiest way to get (most) these is to use an all-in-one installer such as [A
 #### A. Create the Environment
 
 ```
-bash setup_osx.sh 
+conda env create -f conda-osx.yml 
 ```
 
 #### B. Activate the new `pffn` Environment
