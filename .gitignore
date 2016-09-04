@@ -1,3 +1,5 @@
-*.*~ 
+*.*.init
+*.*~
+*/.ipynb_checkpoints/* 
 .ipynb_checkpoints/*
 bulk/
