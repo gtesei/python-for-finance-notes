@@ -1,42 +1,15 @@
 # python-for-finance-notes
 
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat)](http://badges.mit-license.org)
-[![Badges](http://img.shields.io/:badges-4/4-ff6799.svg)](https://github.com/badges/badgerbadgerbadger)
 
-# Requirements
+__Python notes on finance__
 
-This tutorial requires the following packages:
+## Suggested path 
 
-- Python version 3.4+ 
-    - likely Python 2.7 would be fine, but *who knows*? :P
-- `numpy` version 1.10 or later: http://www.numpy.org/
-- `scipy` version 0.16 or later: http://www.scipy.org/
-- `matplotlib` version 1.4 or later: http://matplotlib.org/
-- `pandas` version 0.16 or later: http://pandas.pydata.org
-- `scikit-learn` version 0.15 or later: http://scikit-learn.org
-- `keras` version 1.0 or later: http://keras.io
-- `theano` version 0.8 or later: http://deeplearning.net/software/theano/
-- `ipython`/`jupyter` version 4.0 or later, with notebook support
+1. [Value of an European Call Option, Key Factors for Evaluating the Performance of a Portfolio, Get financial data, Plotting stock prices, Normalizing prices, Rolling statistics, Daily returns, Cumulative return, Rsk, Sharpe Ratio, ](https://github.com/gtesei/python-for-finance-notes/blob/master/1__Warmup.ipynb)
+2. [Python optimizers, Convex/NonConvex loss functions, Basin Hopping and Simulated Annealing, More dimensions, contraints and bounds, Optimizing portfolios](https://github.com/gtesei/python-for-finance-notes/blob/master/2__Optimizing_Portfolios.ipynb)
+3. [Alpha factors, Alphalens](https://github.com/gtesei/python-for-finance-notes/blob/master/3__Alpha_Factors.ipynb)
+4. [Stock Picking 1, Cumulative return and Sharp Ratio as performance indicators ](https://github.com/gtesei/python-for-finance-notes/blob/master/4_1__Stock_Picking_Understand_the_Past.ipynb)
+5. [Stock Picking 2, Correlation between Cumulative return and Sharp Ratio, the dummy stock picker performance performance  degradation in time](https://github.com/gtesei/python-for-finance-notes/blob/master/3__Alpha_Factors.ipynb)
 
-(Optional but recommended):
 
-- `pyyaml`
-- `hdf5` and `h5py` (required if you use model saving/loading functions in keras)
-- **NVIDIA cuDNN** if you have NVIDIA GPUs on your machines.
-    [https://developer.nvidia.com/rdp/cudnn-download]()
-
-The easiest way to get (most) these is to use an all-in-one installer such as [Anaconda](http://www.continuum.io/downloads) from Continuum. These are available for multiple architectures.
-
-# Recreate the Conda Environment
-
-#### A. Create the Environment
-
-```
-conda env create -f conda-osx.yml 
-```
-
-#### B. Activate the new `pffn` Environment
-
-```
-source activate pffn
-```
