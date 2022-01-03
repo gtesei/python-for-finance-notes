@@ -76,7 +76,7 @@ def get_data(symbols,
     if data_source.lower()=='quandl':
       df = web.DataReader(symbols, 'quandl', start=start, end=end , api_key=os.getenv('QUANDL_API_KEY'))
       return df[price]
-    else:
+    elif data_source.lower()=='yahoo':
       if add_ref and 'SPY' not in symbols:  # add SPY for reference, if absent
           symbols.insert(0, 'SPY')
       df = web.DataReader(symbols, 
@@ -84,6 +84,10 @@ def get_data(symbols,
                           start=start, 
                           end=end)
       return df[price]
+    elif data_source.lower()=='av-daily':
+        df = web.DataReader(symbols, 'av-daily', start=start, end=end , api_key=os.getenv('ALPHAVANTAGE_API_KEY'))
+    else:
+        raise Exception('data source not supportred:'+str(data_source))
 
 def compute_daily_returns(df):
     """Compute and return the daily return values."""
@@ -141,7 +145,7 @@ if __name__ == "__main__":
     for i in range(n_batch):
         batch = stock_list[i*BUFF_SIZE:(i+1)*BUFF_SIZE]
         try:
-            _df = fill_missing_values(get_data(batch,  data_source='yahoo', price='Adj Close', start=start_time, end=end_time))
+            _df = fill_missing_values(get_data(batch,  data_source='av-daily', price='close', start=start_time, end=end_time))
             _cum_df = cumulative_returns(_df)
             if cum_df is None:
                 cum_df = _cum_df
