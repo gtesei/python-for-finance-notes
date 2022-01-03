@@ -13,20 +13,21 @@ import random
 def get_data(symbols, 
              add_ref=True,
              data_source='yahoo',
-             price='Adj Close',
+             price='AdjClose', #price='Adj Close',
              start='1/21/2010', 
              end='4/15/2016'):
     """Read stock data (adjusted close) for given symbols from."""
-    
-    if add_ref and 'SPY' not in symbols:  # add SPY for reference, if absent
-        symbols.insert(0, 'SPY')
-
-    df = web.DataReader(symbols, 
-                        data_source=data_source,
-                        start=start, 
-                        end=end)
-    
-    return df[price]
+    if data_source.lower()=='quandl':
+      df = web.DataReader(symbols, 'quandl', start=start, end=end , api_key=os.getenv('QUANDL_API_KEY'))
+      return df[price]
+    else:
+      if add_ref and 'SPY' not in symbols:  # add SPY for reference, if absent
+          symbols.insert(0, 'SPY')
+      df = web.DataReader(symbols, 
+                          data_source=data_source,
+                          start=start, 
+                          end=end)
+      return df[price]
 
 def compute_daily_returns(df):
     """Compute and return the daily return values."""
