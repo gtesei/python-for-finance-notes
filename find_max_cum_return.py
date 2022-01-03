@@ -120,6 +120,7 @@ if __name__ == "__main__":
     print('-' * 30)
     
     ##
+    start_time_millis = time.time()
     log = get_logger('.', 'find_max_cum_ret')
     nasdaq_symbols = get_nasdaq_symbols()
     stock_list = list(nasdaq_symbols.index)
@@ -139,7 +140,7 @@ if __name__ == "__main__":
     for i in range(n_batch):
         batch = stock_list[i*BUFF_SIZE:(i+1)*BUFF_SIZE]
         try:
-            _df = fill_missing_values(get_data(batch, start=start_time, end=end_time))
+            _df = fill_missing_values(get_data(batch,  data_source='yahoo', price='Adj Close', start=start_time, end=end_time))
             _cum_df = cumulative_returns(_df)
             if cum_df is None:
                 cum_df = _cum_df
