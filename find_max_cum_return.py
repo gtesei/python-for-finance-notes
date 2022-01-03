@@ -10,6 +10,7 @@ import datetime
 import random
 import logging
 import time 
+from tqdm import tqdm
 
 def get_logger(log_dir, name):
     """Get a `logging.Logger` instance that prints to the console
