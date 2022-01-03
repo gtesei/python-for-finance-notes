@@ -85,7 +85,14 @@ def get_data(symbols,
                           end=end)
       return df[price]
     elif data_source.lower()=='av-daily':
-        df = web.DataReader(symbols, 'av-daily', start=start, end=end , api_key=os.getenv('ALPHAVANTAGE_API_KEY'))
+        df_all = None 
+        for s in symbols:
+            df = web.DataReader(s, 'av-daily', start=start, end=end , api_key=os.getenv('ALPHAVANTAGE_API_KEY'))
+            if df_all is None:
+                df_all = pd.DataFrame(  {s:df['close']} )
+            else:
+                df_all[s] = df['close']
+        return df_all
     else:
         raise Exception('data source not supportred:'+str(data_source))
 
