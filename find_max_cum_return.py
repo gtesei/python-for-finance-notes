@@ -9,6 +9,7 @@ import argparse
 import datetime
 import random
 import logging
+import time 
 
 def get_logger(log_dir, name):
     """Get a `logging.Logger` instance that prints to the console
