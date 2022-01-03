@@ -17,6 +17,8 @@ def get_data(symbols,
              start='1/21/2010', 
              end='4/15/2016'):
     """Read stock data (adjusted close) for given symbols from."""
+    if type(symbols) == list:
+        symbols = list(set(symbols))
     if data_source.lower()=='quandl':
       df = web.DataReader(symbols, 'quandl', start=start, end=end , api_key=os.getenv('QUANDL_API_KEY'))
       return df[price]
@@ -75,19 +77,35 @@ if __name__ == "__main__":
     end_time = datetime.date.today().strftime("%m/%d/%Y")
     start_time = (datetime.date.today() + datetime.timedelta(days=-1*args.window_size)).strftime("%m/%d/%Y")
     
-    df = fill_missing_values(get_data(stock_list, start=start_time, end=end_time))
+    # beffering
+    BUFF_SIZE = 50
+    n_batch = len(stock_list) // BUFF_SIZE
+    cum_df = None 
     
-    cum_df = cumulative_returns(df)
+    for i in range(n_batch):
+        batch = stock_list[i*BUFF_SIZE:(i+1)*BUFF_SIZE]
+        try:
+            _df = fill_missing_values(get_data(batch, start=start_time, end=end_time))
+            _cum_df = cumulative_returns(_df)
+            if cum_df is None:
+                cum_df = _cum_df
+            else:
+                cum_df = pd.concat([cum_df,_cum_df],axis=1) 
+                # top-k 
+                top_k = pd.DataFrame(cum_df.iloc[len(cum_df) - 1,:].sort_values(ascending=False)[:args.top_k])
+                print("***********",i+1,"/",n_batch)
+                print(top_k)
+                top_k.to_csv(args.file_name)
+        except Exception as err:
+            log.error('<<Error>>::'+str(err), exc_info=True)
     
-    top_k = pd.DataFrame(cum_df.iloc[len(cum_df) - 1,:].sort_values(ascending=False)[:args.top_k])
     
-    print(top_k)
-    
-    top_k.to_csv(args.file_name)
-    
-    
-    
-    
-    
-    
-    
+    ##################
+    seconds = time.time() - start_time_millis
+    mins = seconds / 60
+    hours = mins / 60
+    days = hours / 24
+    print("------>>>>>>> elapsed seconds: " + str(seconds))
+    print("------>>>>>>> elapsed minutes: " + str(mins))
+    print("------>>>>>>> elapsed hours: " + str(hours))
+    print("------>>>>>>> elapsed days: " + str(days))
