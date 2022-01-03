@@ -12,7 +12,7 @@ import random
 
 def get_data(symbols, 
              add_ref=True,
-             data_source='yahoo',
+             data_source='quandl', #'yahoo' 
              price='AdjClose', #price='Adj Close',
              start='1/21/2010', 
              end='4/15/2016'):
